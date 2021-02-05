@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{%block tital%}User Login{%endblock%}
+{%block content%}
+<h1 class="text-center mb-5">LOGIN</h1>
+    <form class="container " action="{% url 'login_url' %}" method="post">
+    {% csrf_token %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger mt-2">
+                {{ error }}
+            </div>
+        {% endfor %}
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {%endif%}
+
+
+        {% for field in form %}
+                <div class="form-group">
+                    {{ field.label }}
+                    {{ field }}
+                    <br>
+                    <br>
+                </div>
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {{ field.errors}}
+                </div>
+            {% endif %}
+
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+{%endblock%}
